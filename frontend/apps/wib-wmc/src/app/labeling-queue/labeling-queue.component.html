@@ -1,0 +1,6 @@
+<ul>
+  <li *ngFor="let r of receipts">
+    <input type="checkbox" (change)="toggle(r.id)"> {{r.name}}
+  </li>
+</ul>
+<button (click)="confirm()">Bulk Confirm</button>

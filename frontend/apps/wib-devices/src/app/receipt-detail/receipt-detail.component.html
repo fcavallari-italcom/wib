@@ -1,0 +1,12 @@
+<div *ngIf="receipt">
+  <div *ngFor="let line of receipt.lines">
+    <div>{{line.labelRaw}}</div>
+    <div>
+      <span *ngFor="let t of line.typePredictions" (click)="setType(line,t)">{{t}}</span>
+    </div>
+    <div>
+      <span *ngFor="let c of line.categoryPredictions" (click)="setCategory(line,c)">{{c}}</span>
+    </div>
+  </div>
+  <button (click)="confirm()">Conferma</button>
+</div>
