@@ -4,7 +4,9 @@
 
 - `dotnet build backend/WIB.sln`
 - `python -m pytest services/ocr/tests services/ml/tests`
-- `npm test --prefix frontend`
+- `npm run check:angular`
+- `npm run lint --prefix frontend`
+- `docker compose up`
 
 ## Obiettivi
 

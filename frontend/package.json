@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "build": "echo placeholder build",
-    "test": "echo no tests"
+    "test": "echo no tests",
+    "lint": "echo lint"
   },
   "devDependencies": {
     "@angular/cli": "19.0.0"
