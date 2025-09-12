@@ -1,0 +1,5 @@
+* text=auto eol=lf
+
+*.cs diff=csharp
+*.ts diff=javascript
+*.md diff=markdown

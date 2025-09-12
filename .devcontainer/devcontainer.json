@@ -1,0 +1,8 @@
+{
+  "name": "wib-dev",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "dotnet --version",
+  "customizations": {}
+}

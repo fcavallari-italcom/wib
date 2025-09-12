@@ -1,0 +1,10 @@
+{
+  "name": "wib-monorepo",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "check:angular": "node scripts/check-angular.js",
+    "format": "dotnet format backend/WIB.sln || true",
+    "lint:all": "npm run lint --prefix frontend"
+  }
+}

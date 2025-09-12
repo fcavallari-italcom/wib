@@ -31,6 +31,10 @@ def predict(req: PredictRequest):
 def feedback(req: FeedbackRequest):
     return {"status": "ok"}
 
+@app.post("/train")
+def train():
+    return {"status": "ok"}
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
