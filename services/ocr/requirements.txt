@@ -1,3 +1,7 @@
-fastapi==0.111.0
-uvicorn[standard]==0.30.0
-pytest==8.2.0
+fastapi
+uvicorn
+pillow
+opencv-python-headless
+pytesseract
+numpy
+paddleocr
