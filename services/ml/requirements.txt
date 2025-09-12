@@ -1,4 +1,9 @@
 fastapi==0.111.0
 uvicorn[standard]==0.30.0
 scikit-learn==1.5.0
+joblib==1.4.2
+sentence-transformers==2.2.2
+qdrant-client==1.7.3
+pydantic==2.7.1
 pytest==8.2.0
+huggingface-hub==0.14.1
