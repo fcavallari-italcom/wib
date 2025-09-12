@@ -1,0 +1,5 @@
+<ul>
+  <li *ngFor="let r of receipts">
+    <a [routerLink]="['/receipts', r.id]">{{r.name}} - {{r.status}}</a>
+  </li>
+</ul>
