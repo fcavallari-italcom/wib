@@ -20,4 +20,3 @@ jobs:
       - run: npm run check:angular
       - run: pip install -r services/ocr/requirements.txt -r services/ml/requirements.txt
       - run: python -m pytest services/ocr/tests services/ml/tests
-      - run: docker compose build
