@@ -1,7 +1,21 @@
+# Visual Studio
 **/bin/
 **/obj/
-**/__pycache__/
 *.user
-*.swp
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Node
 node_modules/
+**/dist/
+
+# Python
+**/__pycache__/
+*.py[cod]
+*.venv
+
+# Others
+*.swp
 .data/
+.env
