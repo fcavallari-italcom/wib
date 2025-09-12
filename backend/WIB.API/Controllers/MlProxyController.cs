@@ -1,5 +1,5 @@
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using WIB.Application.Interfaces;
 
 namespace WIB.API.Controllers;
 
@@ -7,33 +7,26 @@ namespace WIB.API.Controllers;
 [Route("ml")]
 public class MlProxyController : ControllerBase
 {
-    private readonly HttpClient _client;
+    private readonly IProductClassifier _classifier;
 
-    public MlProxyController(IHttpClientFactory factory)
+    public MlProxyController(IProductClassifier classifier)
     {
-        _client = factory.CreateClient("ml");
+        _classifier = classifier;
     }
 
-    [HttpPost("predict")]
-    public async Task<IActionResult> Predict([FromBody] object body)
+    [HttpGet("suggestions")]
+    public async Task<IActionResult> Suggestions([FromQuery] string labelRaw, [FromQuery] string? brand, CancellationToken ct)
     {
-        var content = new StringContent(body.ToString() ?? "{}", Encoding.UTF8, "application/json");
-        var response = await _client.PostAsync("predict", content);
-        return Content(await response.Content.ReadAsStringAsync(), "application/json");
+        var result = await _classifier.PredictAsync(labelRaw, brand, ct);
+        return Ok(result);
     }
+
+    public record FeedbackRequest(string LabelRaw, string? Brand, Guid FinalTypeId, Guid? FinalCategoryId);
 
     [HttpPost("feedback")]
-    public async Task<IActionResult> Feedback([FromBody] object body)
+    public async Task<IActionResult> Feedback([FromBody] FeedbackRequest request, CancellationToken ct)
     {
-        var content = new StringContent(body.ToString() ?? "{}", Encoding.UTF8, "application/json");
-        var response = await _client.PostAsync("feedback", content);
-        return Content(await response.Content.ReadAsStringAsync(), "application/json");
-    }
-
-    [HttpPost("train")]
-    public async Task<IActionResult> Train()
-    {
-        var response = await _client.PostAsync("train", null);
-        return Content(await response.Content.ReadAsStringAsync(), "application/json");
+        await _classifier.FeedbackAsync(request.LabelRaw, request.Brand, request.FinalTypeId, request.FinalCategoryId, ct);
+        return Accepted();
     }
 }
