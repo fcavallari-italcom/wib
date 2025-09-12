@@ -1,0 +1,9 @@
+{
+  "name": "wib-root",
+  "private": true,
+  "scripts": {
+    "check:angular": "node scripts/check-angular.js",
+    "format": "dotnet format && black services",
+    "lint:all": "dotnet format --verify-no-changes && npm --prefix frontend test && black --check services"
+  }
+}

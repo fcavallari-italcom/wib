@@ -1,0 +1,20 @@
+# Build artifacts
+**/bin/
+**/obj/
+
+# Node
+node_modules/
+frontend/dist/
+
+# Python
+**/__pycache__/
+*.pyc
+
+# IDE / Tools
+*.user
+*.swp
+.vscode/
+
+# Env & data
+.env
+.data/

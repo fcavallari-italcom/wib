@@ -1,0 +1,7 @@
+* text=auto eol=lf
+
+*.cs diff=csharp
+*.csproj diff=xml
+*.json diff=json
+*.yml diff=yaml
+*.md diff=markdown
