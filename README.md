@@ -1,3 +1,11 @@
+# Where I Buy Monorepo
+
+## Avvio rapido
+
+- `dotnet build backend/WIB.sln`
+- `python -m pytest services/ocr/tests services/ml/tests`
+- `npm test --prefix frontend`
+
 ## Obiettivi
 
 - Caricare foto/screenshot di **scontrini** da app Angular (mobile-first, fotocamera del telefono).
