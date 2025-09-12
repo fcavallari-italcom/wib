@@ -1,6 +1,8 @@
+using WIB.Application.Models;
+
 namespace WIB.Application.Interfaces;
 
 public interface IKieClient
 {
-    Task<string> ExtractFieldsAsync(string ocrResult, CancellationToken ct);
+    Task<ReceiptDraft> ExtractFieldsAsync(OcrResult ocr, CancellationToken ct);
 }
