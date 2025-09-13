@@ -23,6 +23,11 @@
   <ItemGroup>
     <ProjectReference Include="..\WIB.Application\WIB.Application.csproj" />
     <ProjectReference Include="..\WIB.Domain\WIB.Domain.csproj" />
+    <ProjectReference Include="..\WIB.Infrastructure\WIB.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Snapshots/**" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
 </Project>
