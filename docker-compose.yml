@@ -1,6 +1,8 @@
 services:
   api:
-    build: ./backend/WIB.API
+    build:
+      context: ./backend
+      dockerfile: WIB.API/Dockerfile
     environment:
       ASPNETCORE_URLS: http://+:8080
       ConnectionStrings__Default: Host=db;Database=wib;Username=wib;Password=wib
@@ -21,7 +23,9 @@ services:
       - ml
       - qdrant
   worker:
-    build: ./backend/WIB.Worker
+    build:
+      context: ./backend
+      dockerfile: WIB.Worker/Dockerfile
     environment:
       ConnectionStrings__Default: Host=db;Database=wib;Username=wib;Password=wib
       Minio__Endpoint: minio:9000
