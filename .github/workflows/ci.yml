@@ -2,20 +2,90 @@ name: CI
 
 on:
   pull_request:
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - service: api
+            path: backend/WIB.API
+          - service: worker
+            path: backend/WIB.Worker
+          - service: ocr
+            path: services/ocr
+          - service: ml
+            path: services/ml
+          - service: angular
+            path: frontend
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v3
+
+      - name: Setup .NET
+        if: matrix.service == 'api' || matrix.service == 'worker'
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
-      - run: dotnet build backend/WIB.sln
-      - uses: actions/setup-node@v4
+
+      - name: Test .NET
+        if: matrix.service == 'api' || matrix.service == 'worker'
+        run: dotnet test backend/WIB.sln
+
+      - name: Setup Python
+        if: matrix.service == 'ocr' || matrix.service == 'ml'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install OCR deps
+        if: matrix.service == 'ocr'
+        run: pip install -r services/ocr/requirements.txt
+
+      - name: Install ML deps
+        if: matrix.service == 'ml'
+        run: pip install -r services/ml/requirements.txt
+
+      - name: PyTest OCR
+        if: matrix.service == 'ocr'
+        run: pytest services/ocr/tests
+
+      - name: PyTest ML
+        if: matrix.service == 'ml'
+        run: pytest services/ml/tests
+
+      - name: Setup Node
+        if: matrix.service == 'angular'
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm run lint --prefix frontend
-      - run: npm run check:angular
-      - run: pip install -r services/ocr/requirements.txt -r services/ml/requirements.txt
-      - run: python -m pytest services/ocr/tests services/ml/tests
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend deps
+        if: matrix.service == 'angular'
+        working-directory: frontend
+        run: npm install
+
+      - name: Lint frontend
+        if: matrix.service == 'angular'
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Test frontend
+        if: matrix.service == 'angular'
+        working-directory: frontend
+        run: npm test
+
+      - name: Build Docker image
+        run: |
+          if [ -f "${{ matrix.path }}/Dockerfile" ]; then
+            docker build ${{ env.NO_CACHE }} -t wib-${{ matrix.service }} ${{ matrix.path }}
+          else
+            echo "No Dockerfile for ${{ matrix.service }}, skipping"
+          fi
+        env:
+          NO_CACHE: ${{ startsWith(github.ref, 'refs/tags/') && '--no-cache' || '' }}
