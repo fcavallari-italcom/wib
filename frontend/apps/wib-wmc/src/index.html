@@ -6,6 +6,14 @@
   </head>
   <body>
     <wib-wmc-root></wib-wmc-root>
-    <script>window.__env={apiUrl:''};</script>
+    <script>
+      window.__env = {
+        apiUrl: "${API_URL}",
+        ocrUrl: "${OCR_URL}",
+        mlUrl: "${ML_URL}",
+        qdrantUrl: "${QDRANT_URL}",
+        minioUrl: "${MINIO_URL}"
+      };
+    </script>
   </body>
 </html>
